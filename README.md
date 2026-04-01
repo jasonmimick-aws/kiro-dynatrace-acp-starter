@@ -45,7 +45,7 @@ export DT_PLATFORM_TOKEN="dt0s16...."   # the token you just created
 ### 3. Clone and run
 
 ```bash
-git clone https://github.com/your-org/kiro-dynatrace-acp-starter.git
+git clone https://github.com/jasonmimick-aws/kiro-dynatrace-acp-starter.git
 cd kiro-dynatrace-acp-starter
 kiro-cli chat
 ```

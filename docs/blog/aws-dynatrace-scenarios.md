@@ -155,7 +155,7 @@ You: Create a Dynatrace workflow that:
 All five scenarios work today with the [Kiro + Dynatrace quickstart](../../README.md):
 
 ```bash
-git clone https://github.com/your-org/kiro-dynatrace-acp-starter.git
+git clone https://github.com/jasonmimick-aws/kiro-dynatrace-acp-starter.git
 cd kiro-dynatrace-acp-starter
 ./setup.sh
 export DT_ENVIRONMENT="https://YOUR-ENV-ID.apps.dynatrace.com"
