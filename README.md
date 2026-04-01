@@ -157,12 +157,12 @@ Add to `~/.config/zed/settings.json`:
 
 ## dtctl: Dashboard, Workflow & SLO Management
 
-The MCP server handles querying and investigation. [dtctl](https://github.com/dynatrace-oss/dtctl) handles resource management — dashboards, workflows, SLOs as version-controllable YAML.
+The MCP server handles querying and investigation. [dtctl](https://github.com/dynatrace-oss/dtctl) handles resource management — dashboards, workflows, SLOs as version-controllable YAML. The agent skill that teaches Kiro how to use dtctl is already included in this repo.
 
 ```bash
 brew install dynatrace-oss/tap/dtctl
 dtctl auth login --context my-env --environment "https://YOUR-ENV-ID.apps.dynatrace.com"
-dtctl skills install --cross-client   # teaches Kiro how to use dtctl
+dtctl doctor   # verify connection
 ```
 
 | MCP Server (query & investigate) | dtctl (manage & deploy) |
