@@ -21,7 +21,7 @@ My workflow looked like this: take messy meeting notes about an incident, switch
 
 What I wanted: ask questions about Dynatrace data without leaving my notes. And not just in Obsidian — in whatever tool I happen to be working in.
 
-## The key insight: ACP makes Kiro composable
+## ACP makes Kiro composable
 
 [Kiro CLI](https://kiro.dev/cli/) added support for the [Agent Client Protocol (ACP)](https://agentclientprotocol.com/) — an open standard that works like LSP, but for AI agents. Any ACP-compatible application can spawn `kiro-cli acp` and communicate with it over JSON-RPC.
 
@@ -31,9 +31,9 @@ This means Kiro isn't locked to the terminal. It's a composable agent that works
 - **Obsidian** (via the [Agent Client plugin](https://github.com/RAIT-09/obsidian-agent-client))
 - **Eclipse, Neovim, Emacs**, and any future ACP client
 
-The critical part: Kiro's MCP server configuration travels with it. Configure Dynatrace once in `.kiro/settings/mcp.json`, and every ACP client gets access to the same Dynatrace tools.
+The critical part: Kiro's MCP server configuration travels with it. Configure Dynatrace once, and every ACP client gets access to the same Dynatrace tools.
 
-## Connecting Kiro to Dynatrace <img src="../assets/dynatrace-logo.png" width="24" alt="Dynatrace" style="vertical-align:middle">
+## Setting up Kiro + Dynatrace <img src="../assets/dynatrace-logo.png" width="24" alt="Dynatrace" style="vertical-align:middle">
 
 Dynatrace provides a [remote MCP server](https://docs.dynatrace.com/docs/discover-dynatrace/platform/davis-ai/dynatrace-mcp) — hosted on their platform, no local dependencies. You connect to it with a URL and a platform token.
 
@@ -43,7 +43,7 @@ Go to [myaccount.dynatrace.com/platformTokens](https://myaccount.dynatrace.com/p
 
 ### 2. Configure the MCP server
 
-Create `.kiro/settings/mcp.json`:
+Create `~/.kiro/settings/mcp.json`:
 
 ```json
 {
@@ -58,19 +58,65 @@ Create `.kiro/settings/mcp.json`:
 }
 ```
 
-Set the environment variables and you're done:
+Set the environment variables:
 
 ```bash
 export DT_TENANT="abc12345"
 export DT_PLATFORM_TOKEN="dt0s16...."
-kiro-cli chat
 ```
 
 No Node.js, no local server process, no OAuth browser flow. Just a URL and a token.
 
-## The Obsidian setup
+### 3. Install dtctl and the agent skill
 
-This is where ACP pays off. I installed the [Agent Client plugin](https://github.com/RAIT-09/obsidian-agent-client) in Obsidian, pointed it at `kiro-cli acp`, and that was it. Kiro picks up the Dynatrace MCP config from `~/.kiro/settings/mcp.json` automatically — no tokens to duplicate, no environment variables to set in Obsidian.
+[dtctl](https://github.com/dynatrace-oss/dtctl) is a kubectl-inspired CLI for Dynatrace. It handles the write path — creating dashboards, workflows, and SLOs. But Kiro doesn't know dtctl exists by default. You teach it by adding an **agent skill** — a markdown file that describes dtctl's commands and when to use them.
+
+```bash
+brew install dynatrace-oss/tap/dtctl
+dtctl auth login --context my-env --environment "https://YOUR-ENV-ID.apps.dynatrace.com"
+```
+
+The starter repo includes the skill file at `.kiro/skills/dtctl/SKILL.md`. When Kiro sees a request to create or modify a Dynatrace resource, it reads this skill file and knows to use `dtctl apply -f` instead of telling you to open the Dynatrace web UI.
+
+### 4. Try it out in the terminal
+
+Start a chat and verify everything works:
+
+```bash
+kiro-cli chat
+```
+
+Try these prompts to exercise the full stack:
+
+```
+Show me open Dynatrace problems
+```
+
+```
+Query error logs from the last hour, limit 10
+```
+
+```
+What services is Dynatrace monitoring?
+```
+
+```
+Create a dashboard called "Test Dashboard" with one tile showing error rate for my top service
+```
+
+The first three use the MCP server (read path). The last one uses dtctl (write path) — Kiro generates a dashboard YAML and deploys it automatically. Here's a real dashboard Kiro created via dtctl:
+
+<img src="../assets/dtctl-dashboard.png" width="700" alt="Dashboard created by Kiro via dtctl">
+
+The split is clean:
+- **MCP server** → read path (query, investigate, analyze)
+- **dtctl** → write path (create, edit, deploy, version-control)
+
+## Now bring it to Obsidian
+
+This is where ACP pays off. Everything you just set up in Kiro CLI — the Dynatrace MCP server, dtctl, the agent skill — carries over automatically. No reconfiguration needed.
+
+I installed the [Agent Client plugin](https://github.com/RAIT-09/obsidian-agent-client) in Obsidian, pointed it at `kiro-cli acp`, and that was it. Kiro picks up the Dynatrace MCP config from `~/.kiro/settings/mcp.json` automatically — no tokens to duplicate, no environment variables to set in Obsidian.
 
 Now I can:
 
@@ -82,27 +128,7 @@ Now I can:
 
 - **Correlate with AWS.** "Are the ECS tasks healthy for that service?" — Kiro shells out to the AWS CLI and cross-references with Dynatrace data.
 
-## Adding dtctl for the write path <img src="../assets/dynatrace-logo.png" width="24" alt="Dynatrace" style="vertical-align:middle">
-
-The Dynatrace MCP server is excellent for querying — logs, problems, traces, entities, Davis AI. But when I need to create or modify Dynatrace resources (dashboards, workflows, SLOs), I use [dtctl](https://github.com/dynatrace-oss/dtctl).
-
-dtctl is a kubectl-inspired CLI for Dynatrace that Kiro can invoke via shell. It handles the full CRUD lifecycle:
-
-```
-You: Create a dashboard showing error rate and p95 latency for checkout-service
-```
-
-Kiro generates a dashboard YAML and deploys it with `dtctl apply -f`. Here's a real dashboard Kiro created via dtctl:
-
-<img src="../assets/dtctl-dashboard.png" width="700" alt="Dashboard created by Kiro via dtctl">
-
-```bash
-dtctl describe dashboard "Checkout Health" -o yaml > dashboards/checkout-health.yaml
-```
-
-The split is clean:
-- **MCP server** → read path (query, investigate, analyze)
-- **dtctl** → write path (create, edit, deploy, version-control)
+- **Create dashboards from Obsidian.** "Create a dashboard for checkout-service" — Kiro runs dtctl under the hood, same as it did in the terminal.
 
 ## The architecture
 
@@ -112,14 +138,14 @@ The beauty of this: I configured Dynatrace once. It works in my terminal, in Obs
 
 ## Try it yourself
 
-We've published a [starter repo](https://github.com/your-org/kiro-dynatrace-acp-starter) with:
+We've published a [starter repo](https://github.com/jasonmimick-aws/kiro-dynatrace-acp-starter) with:
 - Pre-configured MCP server pointing to Dynatrace's remote gateway
-- Steering rules that teach Kiro when to use MCP vs. dtctl
-- An Obsidian vault with sample notes and prompts
-- Five hands-on scenarios from basic log queries to automated rollback workflows
+- An agent skill that teaches Kiro how to use dtctl
+- An Obsidian vault with sample notes, prompts, and the Agent Client plugin pre-installed
+- Six hands-on scenarios from basic log queries to automated rollback workflows
 
 ```bash
-git clone https://github.com/your-org/kiro-dynatrace-acp-starter.git
+git clone https://github.com/jasonmimick-aws/kiro-dynatrace-acp-starter.git
 cd kiro-dynatrace-acp-starter
 export DT_TENANT="your-env-id"
 export DT_PLATFORM_TOKEN="dt0s16...."
