@@ -1,0 +1,63 @@
+# Example: ECS Service Health Dashboard
+# Deploy with: dtctl apply -f examples/dashboards/ecs-service-health.yaml
+
+metadata:
+  name: "ECS Service Health"
+  owner: "platform-team"
+  shared: true
+  preset: true
+
+tiles:
+  - title: "Request Rate by Service"
+    type: "DATA_EXPLORER"
+    query: |
+      timeseries request_rate = avg(dt.service.request.count),
+        by: {dt.entity.service},
+        interval: 5m
+    visualization: "BAR_CHART"
+    position:
+      top: 0
+      left: 0
+      width: 12
+      height: 6
+
+  - title: "Error Rate by Service"
+    type: "DATA_EXPLORER"
+    query: |
+      timeseries error_rate = avg(dt.service.request.failure_rate),
+        by: {dt.entity.service},
+        interval: 5m
+    visualization: "LINE_CHART"
+    position:
+      top: 0
+      left: 12
+      width: 12
+      height: 6
+
+  - title: "P95 Response Time"
+    type: "DATA_EXPLORER"
+    query: |
+      timeseries p95 = percentile(dt.service.request.response_time, 95),
+        by: {dt.entity.service},
+        interval: 5m
+    visualization: "LINE_CHART"
+    position:
+      top: 6
+      left: 0
+      width: 12
+      height: 6
+
+  - title: "Recent Problems"
+    type: "DATA_EXPLORER"
+    query: |
+      fetch events
+      | filter event.kind == "DAVIS_PROBLEM"
+      | sort timestamp desc
+      | limit 10
+      | fields timestamp, display_id, title, severity, status
+    visualization: "TABLE"
+    position:
+      top: 6
+      left: 12
+      width: 12
+      height: 6

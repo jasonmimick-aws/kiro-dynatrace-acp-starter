@@ -1,0 +1,44 @@
+# Example: Error Rate Alert Workflow
+# Deploy with: dtctl apply -f examples/workflows/error-rate-alert.yaml
+#
+# This workflow triggers when any service's error rate exceeds 5%
+# and sends a Slack notification with details.
+
+metadata:
+  name: "Error Rate Alert"
+  owner: "platform-team"
+  description: "Alerts when service error rate exceeds threshold"
+
+trigger:
+  type: "metric"
+  config:
+    query: |
+      timeseries error_rate = avg(dt.service.request.failure_rate),
+        by: {dt.entity.service},
+        interval: 5m
+    condition:
+      type: "ABOVE"
+      threshold: 5.0
+    evaluationWindow: "15m"
+
+actions:
+  - name: "get_problem_details"
+    type: "DQL"
+    query: |
+      fetch events
+      | filter event.kind == "DAVIS_PROBLEM" AND status == "OPEN"
+      | filter contains(affected_entity.name, "{{ trigger.entity.name }}")
+      | sort timestamp desc
+      | limit 1
+
+  - name: "notify_slack"
+    type: "SLACK"
+    config:
+      channel: "#incidents"
+      message: |
+        🚨 *Error Rate Alert*
+        Service: {{ trigger.entity.name }}
+        Error Rate: {{ trigger.value }}%
+        Threshold: 5%
+        Time: {{ trigger.timestamp }}
+        Problem: {{ actions.get_problem_details.result[0].title | default:"No correlated problem" }}
