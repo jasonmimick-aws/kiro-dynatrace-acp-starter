@@ -43,7 +43,7 @@ Go to [myaccount.dynatrace.com/platformTokens](https://myaccount.dynatrace.com/p
 
 ### 2. Configure the MCP server
 
-Create `~/.kiro/settings/mcp.json`:
+Follow the [Dynatrace MCP server setup guide](https://docs.dynatrace.com/docs/discover-dynatrace/platform/davis-ai/dynatrace-mcp) to connect Kiro. Create `~/.kiro/settings/mcp.json`:
 
 ```json
 {
@@ -65,7 +65,7 @@ export DT_TENANT="abc12345"
 export DT_PLATFORM_TOKEN="dt0s16...."
 ```
 
-No Node.js, no local server process, no OAuth browser flow. Just a URL and a token.
+That's it — Kiro now has access to your entire Dynatrace environment. Next, let's add the ability to create and manage resources.
 
 ### 3. Install dtctl and the agent skill
 
@@ -118,6 +118,8 @@ This is where ACP pays off. Everything you just set up in Kiro CLI — the Dynat
 
 I installed the [Agent Client plugin](https://github.com/RAIT-09/obsidian-agent-client) in Obsidian, pointed it at `kiro-cli acp`, and that was it. Kiro picks up the Dynatrace MCP config from `~/.kiro/settings/mcp.json` automatically — no tokens to duplicate, no environment variables to set in Obsidian.
 
+![Obsidian + Kiro investigating a Dynatrace incident](../assets/obsidian-incident-demo.png)
+
 Now I can:
 
 - **Investigate incidents from my meeting notes.** I'm taking notes during an incident review, and I ask Kiro to pull the Dynatrace problems and traces for the timeframe we're discussing. The data appears right in my chat panel.
@@ -153,6 +155,8 @@ kiro-cli chat
 ```
 
 ---
+
+**Next up:** [5 AWS + Dynatrace Scenarios You Can Run from Kiro CLI](https://github.com/jasonmimick-aws/kiro-dynatrace-acp-starter/blob/main/docs/blog/aws-dynatrace-scenarios.md) — incident investigation, ECS monitoring, Lambda error correlation, dashboard-as-code, and automated rollback.
 
 *Inspired by [I Stopped Copy-Pasting My Notes — Here's How Kiro Made That Possible](https://builder.aws.com/content/2sKgzYGVZDgizZjSh5V1B4kQLwo/i-stopped-copy-pasting-my-notes-heres-how-kiro-made-that-possible) on BuilderHub.*
 

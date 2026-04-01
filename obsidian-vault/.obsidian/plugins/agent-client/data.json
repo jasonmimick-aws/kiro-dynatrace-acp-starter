@@ -72,6 +72,14 @@
   },
   "savedSessions": [
     {
+      "sessionId": "a25c51d5-0f67-43fc-922b-e1be214140ac",
+      "agentId": "kiro-cli",
+      "cwd": "/Users/mimjasov/work/dtclt-kiro/obsidian-vault",
+      "title": "Please review this incident and check dyantrace fo...",
+      "createdAt": "2026-04-01T19:44:36.458Z",
+      "updatedAt": "2026-04-01T19:44:36.459Z"
+    },
+    {
       "sessionId": "cbb65469-1e78-4be2-87fc-1cc18e5e482e",
       "agentId": "kiro-cli",
       "cwd": "/Users/mimjasov/work/dtclt-kiro/obsidian-vault",
