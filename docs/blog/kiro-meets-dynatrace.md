@@ -76,7 +76,14 @@ brew install dynatrace-oss/tap/dtctl
 dtctl auth login --context my-env --environment "https://YOUR-ENV-ID.apps.dynatrace.com"
 ```
 
-The starter repo includes the skill file at `.kiro/skills/dtctl/SKILL.md`. When Kiro sees a request to create or modify a Dynatrace resource, it reads this skill file and knows to use `dtctl apply -f` instead of telling you to open the Dynatrace web UI.
+The starter repo includes a skill file at `.kiro/skills/dtctl/SKILL.md` — this is how Kiro learns to use dtctl. When Kiro sees a request to create or modify a Dynatrace resource, it reads this skill file and knows to use `dtctl apply -f` instead of telling you to open the Dynatrace web UI.
+
+Install the skill globally so it works from any ACP client (Obsidian, Zed, JetBrains) — not just the project directory:
+
+```bash
+mkdir -p ~/.kiro/skills/dtctl
+cp -r .kiro/skills/dtctl/* ~/.kiro/skills/dtctl/
+```
 
 ### 4. Try it out in the terminal
 
@@ -116,7 +123,7 @@ The split is clean:
 
 This is where ACP pays off. Everything you just set up in Kiro CLI — the Dynatrace MCP server, dtctl, the agent skill — carries over automatically. No reconfiguration needed.
 
-I installed the [Agent Client plugin](https://github.com/RAIT-09/obsidian-agent-client) in Obsidian, pointed it at `kiro-cli acp`, and that was it. Kiro picks up the Dynatrace MCP config from `~/.kiro/settings/mcp.json` automatically — no tokens to duplicate, no environment variables to set in Obsidian.
+I installed the [Agent Client plugin](https://github.com/RAIT-09/obsidian-agent-client) in [Obsidian](https://obsidian.md) — a free, local-first note-taking app built on markdown — pointed it at `kiro-cli acp`, and that was it. Kiro picks up the Dynatrace MCP config from `~/.kiro/settings/mcp.json` automatically — no tokens to duplicate, no environment variables to set in Obsidian.
 
 ![Obsidian + Kiro investigating a Dynatrace incident](../assets/obsidian-incident-demo.png)
 
