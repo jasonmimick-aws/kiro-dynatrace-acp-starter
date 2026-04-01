@@ -128,4 +128,6 @@ kiro-cli chat
 
 ---
 
+*Inspired by [I Stopped Copy-Pasting My Notes — Here's How Kiro Made That Possible](https://builder.aws.com/content/2sKgzYGVZDgizZjSh5V1B4kQLwo/i-stopped-copy-pasting-my-notes-heres-how-kiro-made-that-possible) on BuilderHub.*
+
 *Kiro CLI is available at [kiro.dev](https://kiro.dev). The Dynatrace MCP server is documented at [docs.dynatrace.com](https://docs.dynatrace.com/docs/discover-dynatrace/platform/davis-ai/dynatrace-mcp). dtctl is open-source at [github.com/dynatrace-oss/dtctl](https://github.com/dynatrace-oss/dtctl).*
