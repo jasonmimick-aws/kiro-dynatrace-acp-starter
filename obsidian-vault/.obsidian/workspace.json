@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 226.5
+    "width": 200
   },
   "right": {
     "id": "e1c5a25340b064b8",
@@ -182,7 +182,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 875.5
+    "width": 525.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -197,7 +197,7 @@
       "agent-client:Open agent client": false
     }
   },
-  "active": "452ed37202949b21",
+  "active": "9215b722bcc200e1",
   "lastOpenFiles": [
     "Welcome.md",
     "Setup Guide.md",

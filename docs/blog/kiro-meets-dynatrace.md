@@ -1,6 +1,13 @@
 # Stop Tab-Switching to Investigate Incidents with Kiro + Dynatrace
 
-![Kiro + Dynatrace](../assets/kiro-dt-banner.png)
+<img src="../assets/kiro-dt-banner.png" width="600" alt="Kiro + Dynatrace">
+
+<p>
+<img src="../assets/dynatrace-logo.png" width="28" alt="Dynatrace" style="vertical-align:middle"> <strong>Dynatrace</strong> &nbsp;·&nbsp;
+<img src="../assets/aws-logo.png" width="40" alt="AWS" style="vertical-align:middle"> <strong>AWS</strong> &nbsp;·&nbsp;
+<strong>Kiro CLI</strong> &nbsp;·&nbsp;
+<strong>ACP</strong>
+</p>
 
 **TL;DR:** Kiro CLI implements the Agent Client Protocol (ACP), which means it works as an AI agent in any compatible app — not just the terminal. Pair it with the Dynatrace MCP server, and you can query logs, investigate incidents, and manage dashboards from Obsidian, JetBrains, Zed, or anywhere else. Here's how we set it up and what it looks like in practice.
 
@@ -26,7 +33,7 @@ This means Kiro isn't locked to the terminal. It's a composable agent that works
 
 The critical part: Kiro's MCP server configuration travels with it. Configure Dynatrace once in `.kiro/settings/mcp.json`, and every ACP client gets access to the same Dynatrace tools.
 
-## Connecting Kiro to Dynatrace
+## Connecting Kiro to Dynatrace <img src="../assets/dynatrace-logo.png" width="24" alt="Dynatrace" style="vertical-align:middle">
 
 Dynatrace provides a [remote MCP server](https://docs.dynatrace.com/docs/discover-dynatrace/platform/davis-ai/dynatrace-mcp) — hosted on their platform, no local dependencies. You connect to it with a URL and a platform token.
 
@@ -75,7 +82,7 @@ Now I can:
 
 - **Correlate with AWS.** "Are the ECS tasks healthy for that service?" — Kiro shells out to the AWS CLI and cross-references with Dynatrace data.
 
-## Adding dtctl for the write path
+## Adding dtctl for the write path <img src="../assets/dynatrace-logo.png" width="24" alt="Dynatrace" style="vertical-align:middle">
 
 The Dynatrace MCP server is excellent for querying — logs, problems, traces, entities, Davis AI. But when I need to create or modify Dynatrace resources (dashboards, workflows, SLOs), I use [dtctl](https://github.com/dynatrace-oss/dtctl).
 
