@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1280px; height: 720px;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+    font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #e6edf3;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .container { width: 1200px; height: 640px; position: relative; }
+
+  .box {
+    position: absolute; border-radius: 12px; padding: 16px;
+    backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+  }
+  .box .title {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 1.5px; margin-bottom: 10px; opacity: 0.7;
+  }
+  .box .items { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .item {
+    background: rgba(255,255,255,0.08); border-radius: 8px;
+    padding: 8px 14px; font-size: 13px; font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* ACP Clients */
+  .clients {
+    left: 0; top: 80px; width: 200px; height: 480px;
+    background: linear-gradient(180deg, rgba(233,69,96,0.12) 0%, rgba(233,69,96,0.04) 100%);
+    border-color: rgba(233,69,96,0.3);
+  }
+  .clients .title { color: #e94560; }
+  .clients .items { flex-direction: column; }
+  .clients .item { border-color: rgba(233,69,96,0.2); }
+
+  /* Kiro Hub */
+  .kiro {
+    left: 420px; top: 200px; width: 200px; height: 200px;
+    background: linear-gradient(135deg, rgba(255,153,0,0.2) 0%, rgba(255,153,0,0.08) 100%);
+    border-color: rgba(255,153,0,0.4);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    box-shadow: 0 0 60px rgba(255,153,0,0.15);
+  }
+  .kiro .name { font-size: 22px; font-weight: 700; color: #ff9900; }
+  .kiro .subtitle { font-size: 12px; opacity: 0.6; margin-top: 4px; }
+  .kiro .badge {
+    margin-top: 12px; background: rgba(255,153,0,0.15); border: 1px solid rgba(255,153,0,0.3);
+    border-radius: 20px; padding: 4px 14px; font-size: 11px; color: #ff9900; font-weight: 600;
+  }
+
+  /* Dynatrace */
+  .dynatrace {
+    right: 0; top: 40px; width: 280px; height: 260px;
+    background: linear-gradient(180deg, rgba(115,236,139,0.12) 0%, rgba(115,236,139,0.04) 100%);
+    border-color: rgba(115,236,139,0.3);
+  }
+  .dynatrace .title { color: #73ec8b; }
+  .dynatrace .item { border-color: rgba(115,236,139,0.2); font-size: 12px; }
+  .dt-label { font-size: 14px; font-weight: 600; color: #73ec8b; margin-bottom: 6px; }
+
+  /* AWS */
+  .aws {
+    right: 0; bottom: 40px; width: 280px; height: 240px;
+    background: linear-gradient(180deg, rgba(255,153,0,0.12) 0%, rgba(255,153,0,0.04) 100%);
+    border-color: rgba(255,153,0,0.3);
+  }
+  .aws .title { color: #ff9900; }
+  .aws .item { border-color: rgba(255,153,0,0.2); font-size: 12px; }
+
+  /* dtctl */
+  .dtctl-box {
+    left: 420px; bottom: 40px; width: 200px; height: 80px;
+    background: linear-gradient(180deg, rgba(115,236,139,0.1) 0%, rgba(115,236,139,0.04) 100%);
+    border-color: rgba(115,236,139,0.25);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .dtctl-box .name { font-size: 16px; font-weight: 600; color: #73ec8b; }
+  .dtctl-box .subtitle { font-size: 11px; opacity: 0.5; margin-top: 2px; }
+
+  /* Arrows via SVG */
+  svg.arrows {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .arrow { stroke-width: 2; fill: none; }
+  .arrow-acp { stroke: #e94560; }
+  .arrow-mcp { stroke: #73ec8b; }
+  .arrow-shell { stroke: #888; stroke-dasharray: 6,4; }
+  .arrow-aws { stroke: #ff9900; stroke-dasharray: 6,4; }
+
+  .label {
+    position: absolute; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.5px; padding: 3px 8px; border-radius: 4px;
+  }
+  .label-acp { left: 260px; top: 295px; color: #e94560; background: rgba(233,69,96,0.15); }
+  .label-mcp { left: 680px; top: 255px; color: #73ec8b; background: rgba(115,236,139,0.15); }
+  .label-shell-dt { left: 500px; top: 470px; color: #888; background: rgba(255,255,255,0.05); }
+  .label-shell-aws { left: 700px; top: 470px; color: #ff9900; background: rgba(255,153,0,0.1); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="box clients">
+    <div class="title">ACP Clients</div>
+    <div class="items">
+      <div class="item">🟣 Obsidian</div>
+      <div class="item">🔵 JetBrains IDEs</div>
+      <div class="item">⚡ Zed</div>
+      <div class="item">⬛ Terminal</div>
+      <div class="item">📝 Neovim / Emacs</div>
+      <div class="item">🌐 Any ACP Client</div>
+    </div>
+  </div>
+
+  <div class="box kiro">
+    <div class="name">Kiro CLI</div>
+    <div class="subtitle">ACP Agent</div>
+    <div class="badge">Configure once, use everywhere</div>
+  </div>
+
+  <div class="box dynatrace">
+    <div class="title">Dynatrace</div>
+    <div class="dt-label">MCP Server (Remote)</div>
+    <div class="items">
+      <div class="item">DQL Queries</div>
+      <div class="item">Problems</div>
+      <div class="item">Davis AI</div>
+      <div class="item">Entities</div>
+      <div class="item">Traces & Logs</div>
+      <div class="item">Notebooks</div>
+    </div>
+  </div>
+
+  <div class="box dtctl-box">
+    <div class="name">dtctl</div>
+    <div class="subtitle">Dashboards · Workflows · SLOs</div>
+  </div>
+
+  <div class="box aws">
+    <div class="title">AWS</div>
+    <div class="items">
+      <div class="item">ECS Fargate</div>
+      <div class="item">Lambda</div>
+      <div class="item">CloudWatch</div>
+      <div class="item">S3</div>
+      <div class="item">CloudFormation</div>
+    </div>
+  </div>
+
+  <!-- Arrow labels -->
+  <div class="label label-acp">ACP (JSON-RPC)</div>
+  <div class="label label-mcp">MCP (HTTPS)</div>
+  <div class="label label-shell-dt">shell</div>
+  <div class="label label-shell-aws">shell</div>
+
+  <!-- Arrows -->
+  <svg class="arrows">
+    <!-- ACP: Clients → Kiro -->
+    <path class="arrow arrow-acp" d="M 200,320 C 300,320 320,300 420,300" marker-end="url(#ah-acp)"/>
+    <!-- MCP: Kiro → Dynatrace -->
+    <path class="arrow arrow-mcp" d="M 620,280 C 720,280 780,200 920,200" marker-end="url(#ah-mcp)"/>
+    <!-- Shell: Kiro → dtctl -->
+    <path class="arrow arrow-shell" d="M 520,400 L 520,500" marker-end="url(#ah-shell)"/>
+    <!-- Shell: dtctl → Dynatrace (via right) -->
+    <path class="arrow arrow-mcp" d="M 620,540 C 750,540 850,300 920,260" marker-end="url(#ah-mcp)" style="stroke-dasharray:6,4"/>
+    <!-- Shell: Kiro → AWS -->
+    <path class="arrow arrow-aws" d="M 620,340 C 750,380 850,450 920,460" marker-end="url(#ah-aws)"/>
+
+    <defs>
+      <marker id="ah-acp" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#e94560"/>
+      </marker>
+      <marker id="ah-mcp" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#73ec8b"/>
+      </marker>
+      <marker id="ah-shell" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#888"/>
+      </marker>
+      <marker id="ah-aws" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#ff9900"/>
+      </marker>
+    </defs>
+  </svg>
+
+</div>
+</body>
+</html>

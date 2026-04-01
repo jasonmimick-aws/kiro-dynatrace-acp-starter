@@ -8,19 +8,7 @@ Query logs, investigate incidents, build dashboards, and correlate AWS health wi
 
 Kiro CLI implements ACP, the open standard for agent-editor communication (think LSP, but for AI agents). Configure Dynatrace once, and it's available everywhere:
 
-```
-┌─────────────────────┐                              ┌──────────────┐
-│  Any ACP Client     │     ACP (JSON-RPC/stdio)     │              │     MCP      ┌─────────────────┐
-│  ─────────────────  │◄───────────────────────────►│  Kiro CLI    │◄────────────►│  Dynatrace MCP  │
-│  • Obsidian         │                              │  (ACP agent) │              │  Server (remote)│
-│  • JetBrains IDEs   │                              │              │──shell──►    └────────┬────────┘
-│  • Zed              │                              └──────────────┘  dtctl                │
-│  • Terminal (chat)  │                                    │                        ┌───────┴────────┐
-│  • Neovim / Emacs   │                                    ▼                        │   Dynatrace    │
-└─────────────────────┘                              ┌──────────────┐              │   Platform     │
-                                                     │  AWS CLI     │              └────────────────┘
-                                                     └──────────────┘
-```
+![Architecture](docs/assets/kiro-dt-architecture.png)
 
 ## What You Get
 

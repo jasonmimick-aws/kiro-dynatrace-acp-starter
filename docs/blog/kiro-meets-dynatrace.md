@@ -1,5 +1,7 @@
 # Stop Tab-Switching to Investigate Incidents with Kiro + Dynatrace
 
+![Kiro + Dynatrace](../assets/kiro-dt-banner.png)
+
 **TL;DR:** Kiro CLI implements the Agent Client Protocol (ACP), which means it works as an AI agent in any compatible app — not just the terminal. Pair it with the Dynatrace MCP server, and you can query logs, investigate incidents, and manage dashboards from Obsidian, JetBrains, Zed, or anywhere else. Here's how we set it up and what it looks like in practice.
 
 ---
@@ -95,17 +97,7 @@ The split is clean:
 
 ## The architecture
 
-```
-┌─────────────────────┐                              ┌──────────────┐
-│  Any ACP Client     │     ACP (JSON-RPC/stdio)     │              │     MCP (HTTPS)
-│  ─────────────────  │◄───────────────────────────►│  Kiro CLI    │◄──────────────►  Dynatrace
-│  • Obsidian         │                              │  (ACP agent) │                  Remote MCP
-│  • JetBrains        │                              │              │──shell──►        Server
-│  • Zed              │                              └──────────────┘  dtctl
-│  • Terminal         │                                    │            aws cli
-└─────────────────────┘                                    ▼
-                                                     Dynatrace Platform + AWS
-```
+![Kiro + Dynatrace Architecture](../assets/kiro-dt-architecture.png)
 
 The beauty of this: I configured Dynatrace once. It works in my terminal, in Obsidian, in IntelliJ. If tomorrow a new ACP client appears, Kiro + Dynatrace will work there too — zero additional setup.
 
