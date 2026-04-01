@@ -1,0 +1,190 @@
+name: "TradeManagement Service Dashboard"
+type: dashboard
+content:
+  annotations: []
+  importedWithCode: false
+  settings:
+    defaultTimeframe:
+      enabled: true
+      value:
+        from: now()-2h
+        to: now()
+  layouts:
+    "1":
+      x: 0
+      "y": 0
+      w: 24
+      h: 2
+    "2":
+      x: 0
+      "y": 2
+      w: 8
+      h: 3
+    "3":
+      x: 8
+      "y": 2
+      w: 8
+      h: 3
+    "4":
+      x: 16
+      "y": 2
+      w: 8
+      h: 3
+    "5":
+      x: 0
+      "y": 5
+      w: 12
+      h: 6
+    "6":
+      x: 12
+      "y": 5
+      w: 12
+      h: 6
+    "7":
+      x: 0
+      "y": 11
+      w: 12
+      h: 6
+    "8":
+      x: 12
+      "y": 11
+      w: 12
+      h: 6
+  tiles:
+    "1":
+      title: ""
+      type: markdown
+      content: "## 📈 TradeManagement Service\nEntity: `SERVICE-4B53B27996E90826` — Busiest service (~361K req/day)"
+    "2":
+      title: "Throughput (req/min)"
+      type: data
+      query: |
+        timeseries requests = sum(dt.service.request.count), filter:{dt.entity.service == "SERVICE-4B53B27996E90826"}
+      visualization: singleValue
+      visualizationSettings:
+        autoSelectVisualization: false
+        singleValue:
+          showLabel: true
+          label: "Requests"
+          recordField: requests
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+    "3":
+      title: "Avg Response Time"
+      type: data
+      query: |
+        timeseries rt = avg(dt.service.request.response_time), filter:{dt.entity.service == "SERVICE-4B53B27996E90826"}
+      visualization: singleValue
+      visualizationSettings:
+        autoSelectVisualization: false
+        singleValue:
+          showLabel: true
+          label: "Response Time"
+          recordField: rt
+        unitsOverrides:
+          - identifier: rt
+            baseUnit: microsecond
+            displayUnit: null
+            decimals: 1
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+    "4":
+      title: "Failure Rate"
+      type: data
+      query: |
+        timeseries fr = avg(dt.service.request.failure_rate), filter:{dt.entity.service == "SERVICE-4B53B27996E90826"}
+      visualization: singleValue
+      visualizationSettings:
+        autoSelectVisualization: false
+        singleValue:
+          showLabel: true
+          label: "Failure Rate"
+          recordField: fr
+        thresholds:
+          - field: fr
+            id: 1
+            isEnabled: true
+            rules:
+              - { color: { Default: "var(--dt-colors-charts-status-ideal-default, #2f6862)" }, comparator: "<=", id: 0, value: 1 }
+              - { color: { Default: "var(--dt-colors-charts-status-warning-default, #eea53c)" }, comparator: "<=", id: 1, value: 5 }
+              - { color: { Default: "var(--dt-colors-charts-status-critical-default, #c62239)" }, comparator: ">", id: 2, value: 5 }
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+    "5":
+      title: "Throughput Over Time"
+      type: data
+      query: |
+        timeseries requests = sum(dt.service.request.count), filter:{dt.entity.service == "SERVICE-4B53B27996E90826"}
+      visualization: areaChart
+      visualizationSettings:
+        autoSelectVisualization: false
+        chartSettings:
+          legend:
+            position: bottom
+            showLegend: true
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+    "6":
+      title: "Response Time Over Time"
+      type: data
+      query: |
+        timeseries rt = avg(dt.service.request.response_time), filter:{dt.entity.service == "SERVICE-4B53B27996E90826"}
+      visualization: lineChart
+      visualizationSettings:
+        autoSelectVisualization: false
+        chartSettings:
+          legend:
+            position: bottom
+            showLegend: true
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+    "7":
+      title: "Failure Rate Over Time"
+      type: data
+      query: |
+        timeseries fr = avg(dt.service.request.failure_rate), filter:{dt.entity.service == "SERVICE-4B53B27996E90826"}
+      visualization: areaChart
+      visualizationSettings:
+        autoSelectVisualization: false
+        chartSettings:
+          legend:
+            position: bottom
+            showLegend: true
+        thresholds:
+          - field: fr
+            id: 1
+            isEnabled: true
+            rules:
+              - { color: { Default: "#2f6862" }, comparator: "<=", id: 0, value: 1 }
+              - { color: { Default: "#eea53c" }, comparator: "<=", id: 1, value: 5 }
+              - { color: { Default: "#c62239" }, comparator: ">", id: 2, value: 5 }
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+    "8":
+      title: "Top Downstream Services"
+      type: data
+      query: |
+        timeseries requests = sum(dt.service.request.count), by:{dt.entity.service}, filter:{dt.entity.service == "SERVICE-4B53B27996E90826" or dt.entity.service == "SERVICE-41A4F03120E830E8" or dt.entity.service == "SERVICE-BB06D6E6E358B306"}
+      visualization: barChart
+      visualizationSettings:
+        autoSelectVisualization: false
+        chartSettings:
+          legend:
+            position: bottom
+            showLegend: true
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true

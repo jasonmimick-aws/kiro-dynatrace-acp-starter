@@ -92,7 +92,9 @@ dtctl is a kubectl-inspired CLI for Dynatrace that Kiro can invoke via shell. It
 You: Create a dashboard showing error rate and p95 latency for checkout-service
 ```
 
-Kiro generates a dashboard YAML and deploys it with `dtctl apply -f`. I can then pull it as YAML for version control:
+Kiro generates a dashboard YAML and deploys it with `dtctl apply -f`. Here's a real dashboard Kiro created via dtctl:
+
+<img src="../assets/dtctl-dashboard.png" width="700" alt="Dashboard created by Kiro via dtctl">
 
 ```bash
 dtctl describe dashboard "Checkout Health" -o yaml > dashboards/checkout-health.yaml
