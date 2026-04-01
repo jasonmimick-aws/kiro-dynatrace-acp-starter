@@ -186,7 +186,7 @@ Expected: Script completes, reports status of all prerequisites.
 ```
 You: Create a dashboard for my top 5 services by error rate
 ```
-Expected: Kiro uses MCP to find the services (query), then dtctl to create the dashboard (manage) — matching the steering rules.
+Expected: Kiro uses MCP to find the services (query), then dtctl to create the dashboard (manage).
 
 ### T7.3 — Link check
 Verify all links in README.md, blog posts, and scenario docs resolve (no 404s).

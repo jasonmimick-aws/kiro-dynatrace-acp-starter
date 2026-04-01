@@ -192,8 +192,8 @@ dtctl doctor   # verify connection
 │   ├── settings/
 │   │   ├── mcp.json                  # Remote MCP server config (recommended)
 │   │   └── mcp.local.json            # Local MCP server config (alternative)
-│   └── steering/
-│       └── dynatrace.md              # Steering rules for Dynatrace tools
+│   └── skills/
+│       └── dtctl/                    # Agent skill for dtctl (ships with repo)
 ├── obsidian-vault/                    # Sample Obsidian vault
 │   ├── Welcome.md
 │   ├── Setup Guide.md
