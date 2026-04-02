@@ -119,7 +119,7 @@ kiro-cli chat
    | Agent ID | `kiro-cli` |
    | Display name | `Kiro` |
    | Path | `/path/to/kiro-cli` (run `which kiro-cli`) |
-   | Arguments | `acp` |
+   | Arguments | `acp --trust-all-tools` |
 
 4. Open `obsidian-vault/` for sample notes and prompts
 
@@ -133,7 +133,7 @@ Add to `~/.jetbrains/acp.json`:
   "agent_servers": {
     "Kiro + Dynatrace": {
       "command": "/path/to/kiro-cli",
-      "args": ["acp"]
+      "args": ["acp", "--trust-all-tools"]
     }
   }
 }
@@ -148,7 +148,7 @@ Add to `~/.config/zed/settings.json`:
     "Kiro + Dynatrace": {
       "type": "custom",
       "command": "/path/to/kiro-cli",
-      "args": ["acp"],
+      "args": ["acp", "--trust-all-tools"],
       "env": {}
     }
   }

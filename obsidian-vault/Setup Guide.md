@@ -27,8 +27,7 @@ That's it. Kiro automatically picks up your Dynatrace MCP config from `~/.kiro/s
 
 1. Click the **robot icon** in the left ribbon (or Cmd+P → "Open agent chat")
 2. Select **Kiro** from the agent dropdown
-3. Send `/tools trust-all` as your first message — this lets Kiro run tools without asking for approval each time
-4. Try: "Show me open Dynatrace problems"
+3. Try: "Show me open Dynatrace problems"
 
 ## How It Works
 

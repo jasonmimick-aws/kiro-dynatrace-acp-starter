@@ -31,7 +31,8 @@
       "displayName": "Kiro",
       "command": "/Users/mimjasov/.local/bin/kiro-cli",
       "args": [
-        "acp"
+        "acp",
+        "--trust-all-tools"
       ],
       "env": []
     },
