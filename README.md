@@ -111,7 +111,13 @@ kiro-cli chat
 
 ### Obsidian
 1. Install [Obsidian](https://obsidian.md/download) (free, no account)
-2. Install the [Agent Client plugin](https://github.com/RAIT-09/obsidian-agent-client) via BRAT
+2. Install the [Agent Client plugin](https://github.com/RAIT-09/obsidian-agent-client) — this is a beta plugin, not in the community browser. Install via [BRAT](https://github.com/TfTHacker/obsidian42-brat):
+   - Settings → Community Plugins → Browse → search "BRAT" → Install → Enable
+   - Cmd+P → "BRAT: Add a beta plugin for testing" → paste `RAIT-09/obsidian-agent-client` → Add Plugin
+   - Settings → Community Plugins → toggle on "Agent Client"
+   
+   **Or skip this step** — open the included `obsidian-vault/` folder as a vault. The plugin is pre-installed there.
+
 3. Add Kiro as a custom agent:
 
    | Field | Value |
