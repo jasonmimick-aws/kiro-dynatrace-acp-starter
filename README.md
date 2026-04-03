@@ -217,7 +217,8 @@ dtctl doctor   # verify connection
 
 ## Blog Posts
 
-- [Stop Tab-Switching to Investigate Incidents with Kiro + Dynatrace](docs/blog/kiro-meets-dynatrace.md)
+- [Stop Tab-Switching to Investigate Incidents with Kiro + Dynatrace](https://builder.aws.com/content/3Bl5ti5j15Ahz2Z7EyToMqlapb0/stop-tab-switching-to-investigate-incidents-with-kiro-dynatrace) (AWS Builder Center)
+- [Stop Tab-Switching to Investigate Incidents with Kiro + Dynatrace](docs/blog/kiro-meets-dynatrace.md) (repo copy)
 - [5 AWS + Dynatrace Scenarios You Can Run from Kiro CLI](docs/blog/aws-dynatrace-scenarios.md)
 
 ## License
