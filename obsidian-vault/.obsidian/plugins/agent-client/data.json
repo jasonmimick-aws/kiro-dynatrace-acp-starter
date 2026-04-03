@@ -73,6 +73,14 @@
   },
   "savedSessions": [
     {
+      "sessionId": "5dbb8540-8293-4abe-af4b-9d8c72b043b8",
+      "agentId": "kiro-cli",
+      "cwd": "/Users/mimjasov/work/dtclt-kiro/obsidian-vault",
+      "title": "please give me a list of dyantrace services and or...",
+      "createdAt": "2026-04-03T13:28:17.723Z",
+      "updatedAt": "2026-04-03T13:28:17.724Z"
+    },
+    {
       "sessionId": "a25c51d5-0f67-43fc-922b-e1be214140ac",
       "agentId": "kiro-cli",
       "cwd": "/Users/mimjasov/work/dtclt-kiro/obsidian-vault",

@@ -4,7 +4,7 @@
 - "Today I'll show how Kiro CLI connects to Dynatrace via MCP, learns new tools via Skills, and works in any editor via ACP"
 - Show kiro.dev homepage briefly
 
-## 1. Kiro CLI + Dynatrace MCP (8 min)
+## 1. Kiro CLI + Dynatrace MCP (7 min)
 
 **Terminal:**
 ```bash
@@ -48,27 +48,52 @@ Create a dashboard called "Demo Dashboard" showing error rate for my top service
 
 **Key message:** Skills are how you extend Kiro. Markdown file = new capability.
 
-## 3. ACP — Works Everywhere (8 min)
+## 3. ACP — Obsidian Scenario 1: Incident Correlation (7 min)
 
-**Obsidian demo:**
-- Open ~/work/test-vault2 in Obsidian
-- Show our custom Kiro plugin (robot icon)
-- Click it, send: "Show me open Dynatrace problems"
-- Response streams right in Obsidian
+**Setup:** Open ~/work/test-vault2 in Obsidian. Pre-created note "Incident Report - 2026-04-02" is open.
 
-**Key message:** Configure once (MCP + Skills), use everywhere. Same Dynatrace tools in terminal, Obsidian, Zed, JetBrains.
+**Show the note** — raw incident notes from a meeting:
+- Timestamp, affected service, symptoms, who reported it
+- Incomplete — missing root cause, timeline, impact
 
-**Show the architecture:**
-- Terminal/Obsidian/Zed → ACP (JSON-RPC) → Kiro CLI → MCP → Dynatrace
-- One config, many clients
+**Click the Kiro robot icon, then ask:**
+```
+Read my "Incident Report - 2026-04-02" note. Query Dynatrace for problems and errors during that timeframe. Correlate what you find with my notes and give me an enhanced incident report with root cause, affected entities, and timeline.
+```
 
-## 4. The Blog + Starter Repo (3 min)
+- Kiro reads the note → queries Dynatrace problems + logs → returns enriched report
+- Copy the response back into the note
+
+**Key message:** Your messy meeting notes + live Dynatrace data = complete incident report. All from your note-taking app.
+
+## 4. ACP — Obsidian Scenario 2: Problem Report + Dashboard (7 min)
+
+**Start fresh in Obsidian, ask Kiro:**
+```
+Query Dynatrace for all open problems right now. Create a problem report as a new note with severity, affected services, root cause analysis, and recommended actions.
+```
+
+- Kiro queries Dynatrace → generates a structured problem report
+- Copy into a new Obsidian note
+
+**Then ask:**
+```
+Based on those problems, create a Dynatrace dashboard called "Active Issues - April 2026" with tiles showing error rates, problem count, and affected services.
+```
+
+- Kiro uses dtctl skill → generates dashboard YAML → deploys it
+- Switch to browser → show the dashboard live in Dynatrace
+
+**Key message:** From note-taking app → queried live data → created a production dashboard. Zero context switching. All from Obsidian.
+
+## 5. The Blog + Starter Repo (2 min)
 
 - Show: https://builder.aws.com/content/3Bl5ti5j15Ahz2Z7EyToMqlapb0
 - Show: https://github.com/jasonmimick-aws/kiro-dynatrace-acp-starter
 - "Clone, set 2 env vars, kiro-cli chat — you're connected to Dynatrace"
+- Mention the custom Obsidian plugin we built (obsidian-kiro)
 
-## 5. Q&A (4 min)
+## 6. Q&A (2 min)
 
 ---
 
@@ -77,6 +102,7 @@ Create a dashboard called "Demo Dashboard" showing error rate for my top service
 - [ ] `kiro-cli chat` works in terminal
 - [ ] `dtctl auth whoami` works (re-login if expired: `dtctl auth login`)
 - [ ] Obsidian open with test-vault2, Kiro plugin enabled
+- [ ] "Incident Report - 2026-04-02.md" note exists in test-vault2
 - [ ] Browser tab open to Dynatrace environment
 - [ ] Browser tab open to builder.aws.com blog post
 - [ ] Browser tab open to GitHub starter repo
